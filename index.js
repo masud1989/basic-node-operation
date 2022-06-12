@@ -25,9 +25,13 @@ mongoClient.connect(URL, (error, mongoDbClient) => {
     }
     else{
         console.log('Congrates! Connection Success..');
-        insertData(mongoDbClient);
+        // insertData(mongoDbClient);
         // deleteData(mongoDbClient);
         // deleteAllData(mongoDbClient);
+        // findOneWithOutCondition(mongoDbClient);
+        // findOneWithCondition(mongoDbClient);
+        // findAll(mongoDbClient);
+        findDataByProjection(mongoDbClient);
     }
 })
 
@@ -35,7 +39,7 @@ mongoClient.connect(URL, (error, mongoDbClient) => {
 const insertData = (mongoDbClient) =>{
     const myDatabase = mongoDbClient.db('training');
     const myCollection = myDatabase.collection('students');
-    const myData = {name: 'Alam', class:'10', roll:'4', address:'Dhaka'};
+    const myData = {name: 'Mahin', class:'10', roll:'6', address:'Bogura'};
 
     myCollection.insertOne(myData, (error) => {
         if(error){
@@ -85,3 +89,48 @@ const deleteAllData = (mongoDbClient) =>{
     })
 }
 // Delete All Data Ends =================================================
+
+
+// Find Data without Condition===============================
+const findOneWithOutCondition =  (mongoDbClient) =>{
+    const myDatabase = mongoDbClient.db('training');
+    const myCollection = myDatabase.collection('students');
+    const findCondition = {};
+    myCollection.findOne (findCondition, (error, result) =>{
+        console.log(result);
+    })
+}
+
+
+// Find Data with Condition===============================
+const findOneWithCondition =  (mongoDbClient) =>{
+
+    const myDatabase = mongoDbClient.db('training');
+    const myCollection = myDatabase.collection('students');
+
+    const findCondition = {roll: "6"};
+
+    myCollection.findOne (findCondition, (error, result) =>{
+        console.log(result);
+    })
+}
+
+
+// Find All Data ===============================
+const findAll =  (mongoDbClient) =>{
+    const myDatabase = mongoDbClient.db('training');
+    const myCollection = myDatabase.collection('students');
+    myCollection.find().toArray ((error, result) =>{
+        console.log(result);
+    })
+}
+// Find All Data by Projection ===============================
+const findDataByProjection =  (mongoDbClient) =>{
+    const myDatabase = mongoDbClient.db('training');
+    const myCollection = myDatabase.collection('students');
+    const itemObj = {};
+    const itemProjection = {projection:{class:''}}
+    myCollection.find(itemObj,itemProjection).toArray ((error, result) =>{
+        console.log(result);
+    })
+}
