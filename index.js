@@ -35,7 +35,9 @@ mongoClient.connect(URL, (error, mongoDbClient) => {
         // findDataByQuery(mongoDbClient);
         // findDataByLimit(mongoDbClient);
         // findDataBySort(mongoDbClient);
-        updateData(mongoDbClient);
+        // updateData(mongoDbClient);
+        // createCollection(mongoDbClient);
+        deleteCollection(mongoDbClient);
     }
 })
 
@@ -182,6 +184,26 @@ const updateData = (mongoDbClient) => {
     const updateValue = {$set:{name:'Saad', address:'Sirajganj'}};
 
     myCollection.updateOne(query, updateValue, function (error, result){
+        console.log(result);
+    })
+}
+
+
+// Create Collection =========================================================
+const  createCollection =(mongoDbClient) =>{
+    const myDatabase = mongoDbClient.db('training');
+
+    myDatabase.createCollection('departments', (error, result) => {
+        console.log(result);
+    })
+}
+
+
+// Delete Collection =========================================================
+const  deleteCollection =(mongoDbClient) =>{
+    const myDatabase = mongoDbClient.db('training');
+
+    myDatabase.dropCollection('nameList', (error, result) => {
         console.log(result);
     })
 }
