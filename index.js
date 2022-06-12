@@ -31,7 +31,11 @@ mongoClient.connect(URL, (error, mongoDbClient) => {
         // findOneWithOutCondition(mongoDbClient);
         // findOneWithCondition(mongoDbClient);
         // findAll(mongoDbClient);
-        findDataByProjection(mongoDbClient);
+        // findDataByProjection(mongoDbClient);
+        // findDataByQuery(mongoDbClient);
+        // findDataByLimit(mongoDbClient);
+        // findDataBySort(mongoDbClient);
+        updateData(mongoDbClient);
     }
 })
 
@@ -129,8 +133,55 @@ const findDataByProjection =  (mongoDbClient) =>{
     const myDatabase = mongoDbClient.db('training');
     const myCollection = myDatabase.collection('students');
     const itemObj = {};
-    const itemProjection = {projection:{class:''}}
+    const itemProjection = {$projection:{class:"", name:""}}
     myCollection.find(itemObj,itemProjection).toArray ((error, result) =>{
+        console.log(result);
+    })
+}
+
+// Find All Data by Query ===============================
+const findDataByQuery =  (mongoDbClient) =>{
+    const myDatabase = mongoDbClient.db('training');
+    const myCollection = myDatabase.collection('students');
+    // const query = {address: 'Bogura', roll: '3'};
+    const query = {name: 'Safin'};
+    
+    myCollection.find(query).toArray ((error, result) =>{
+        console.log(result);
+    })
+}
+
+// Find All Data by Limit ===============================
+const findDataByLimit =  (mongoDbClient) =>{
+    const myDatabase = mongoDbClient.db('training');
+    const myCollection = myDatabase.collection('students');
+  
+    myCollection.find().limit(2).toArray ((error, result) =>{
+        console.log(result);
+    })
+}
+
+// Find All Data by Sort ===============================
+const findDataBySort =  (mongoDbClient) =>{
+    const myDatabase = mongoDbClient.db('training');
+    const myCollection = myDatabase.collection('students');
+    // const sortOption = {roll:1}   //for assending
+    const sortOption = {roll:-1}  //for dessending
+  
+    myCollection.find().sort(sortOption).toArray ((error, result) =>{
+        console.log(result);
+    })
+}
+
+//Update Data===============================================
+const updateData = (mongoDbClient) => {
+    const myDatabase = mongoDbClient.db('training');
+    const myCollection = myDatabase.collection('students');
+
+    const query = {roll: '3'};
+    const updateValue = {$set:{name:'Saad', address:'Sirajganj'}};
+
+    myCollection.updateOne(query, updateValue, function (error, result){
         console.log(result);
     })
 }
