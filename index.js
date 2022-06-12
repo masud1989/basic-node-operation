@@ -1,6 +1,7 @@
 const mongoClient = require('mongodb').MongoClient;
 
-const URL = `mongodb+srv://training:Km83f9WjRx5feBqA@cluster0.tyej2.mongodb.net/?retryWrites=true&w=majority`;
+// const URL = `mongodb+srv://training:Km83f9WjRx5feBqA@cluster0.tyej2.mongodb.net/?retryWrites=true&w=majority`;  // connection string for mongodb atlas
+const URL = `mongodb://127.0.0.1:27017/`;    // connection string for mongodb Local Computer
 
 const config = {useUnifiedTopology: true};  // To rempove warning 
 
@@ -34,18 +35,18 @@ mongoClient.connect(URL, (error, mongoDbClient) => {
         // findDataByProjection(mongoDbClient);
         // findDataByQuery(mongoDbClient);
         // findDataByLimit(mongoDbClient);
-        // findDataBySort(mongoDbClient);
+        findDataBySort(mongoDbClient);
         // updateData(mongoDbClient);
         // createCollection(mongoDbClient);
-        deleteCollection(mongoDbClient);
+        // deleteCollection(mongoDbClient);
     }
 })
 
 // Insert Data Starts =================================================
 const insertData = (mongoDbClient) =>{
-    const myDatabase = mongoDbClient.db('training');
+    const myDatabase = mongoDbClient.db('school');
     const myCollection = myDatabase.collection('students');
-    const myData = {name: 'Mahin', class:'10', roll:'6', address:'Bogura'};
+    const myData = {name: 'Sonia', class:'8', roll:'5', address:'Sirajganj'};
 
     myCollection.insertOne(myData, (error) => {
         if(error){
